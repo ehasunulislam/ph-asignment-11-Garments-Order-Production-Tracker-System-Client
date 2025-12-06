@@ -8,9 +8,13 @@ import sr2 from "./sr2.png";
 import sr3 from "./sr3.png";
 import sr4 from "./sr4.png";
 
+// animation
+import error from "./animation/error.json"
+
 export const assets = {
   logo,
   s1, s2, s3, s4,
+  error
 };
 
 
