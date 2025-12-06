@@ -3,8 +3,31 @@ import { TiThMenu } from "react-icons/ti";
 import { Link, NavLink } from "react-router";
 import { assets } from "../../assets/assets";
 import "./Navbar.css";
+import useAuthInfo from "../Hooks/useAuthInfo";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, signOutFunction } = useAuthInfo();
+
+  const handleSignOut = () => {
+    signOutFunction()
+      .then(() => {
+        Swal.fire({
+          title: "Drag me!",
+          icon: "success",
+          draggable: true,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          text: "Something went wrong!",
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+      });
+  };
+
   const link = (
     <>
       <li>
@@ -22,6 +45,12 @@ const Navbar = () => {
       <li>
         <NavLink to="/contact">Contact</NavLink>
       </li>
+
+      {user && (
+        <li>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -40,16 +69,39 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="flex gap-2 items-center">
-            <img src={assets.logo} alt="logo" className="w-8" />
-            <span className="font-semibold hidden md:block">Cartzilla</span>
+          <img src={assets.logo} alt="logo" className="w-8" />
+          <span className="font-semibold hidden md:block">Cartzilla</span>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{link}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/auth/login" className="btn btn-sm">Login</Link>
-        <Link to="/auth/register" className="btn btn-sm ms-3">Register</Link>
+        {user ? (
+          <img
+            src={user.photoURL}
+            alt="user image"
+            className="w-8 h-8 rounded-full cursor-pointer"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <section>
+            <Link to="/auth/login" className="btn btn-sm">
+              Login
+            </Link>
+            <Link to="/auth/register" className="btn btn-sm ms-3">
+              Register
+            </Link>
+          </section>
+        )}
+
+        {user ? (
+          <button className="btn btn-sm ms-3" onClick={handleSignOut}>
+            Log out
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

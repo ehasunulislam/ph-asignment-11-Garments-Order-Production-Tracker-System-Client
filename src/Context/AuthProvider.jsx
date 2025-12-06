@@ -4,7 +4,9 @@ import { auth } from "../Firebase/firebase.config";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 
@@ -26,6 +28,13 @@ const AuthProvider = ({ children }) => {
   };
   /* SignIn with Google Functionality end */
 
+  /* login with email, password functionality start */
+  const loginWithEmailPassword = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+  /* login with email, password functionality end */
+
   /* update profile functionality start */
   const updateProfileFunction = (name, photoURL) => {
     if (!auth.currentUser) {
@@ -38,6 +47,13 @@ const AuthProvider = ({ children }) => {
     });
   };
   /* update profile functionality end */
+
+  /* Sign Out Functionality start */
+  const signOutFunction = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+  /* Sign Out Functionality end */
 
   /* get Current User functionality start */
   useEffect(() => {
@@ -57,11 +73,11 @@ const AuthProvider = ({ children }) => {
     loading,
     createUser,
     updateProfileFunction,
-    signInWithGoogle
+    signInWithGoogle,
+    loginWithEmailPassword,
+    signOutFunction
   };
-  return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
 
 export default AuthProvider;

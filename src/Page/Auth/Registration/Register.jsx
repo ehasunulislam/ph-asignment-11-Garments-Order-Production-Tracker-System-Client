@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router"; // Assuming this is imported from 'react-router-dom' in a real project
 import useAuthInfo from "../../../Components/Hooks/useAuthInfo";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -27,6 +27,11 @@ const Register = () => {
   const { createUser, updateProfileFunction, signInWithGoogle } = useAuthInfo();
   const provider = new GoogleAuthProvider();
   const axiosInstance = useAxios();
+
+  // redirect 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirect = location.state?.from?.pathname || "/"
 
   // Complex Password Regex Definition
   const passwordRegex =
@@ -54,6 +59,7 @@ const Register = () => {
       const imageBB_api_key = `https://api.imgbb.com/1/upload?key=${
         import.meta.env.VITE_IMAGE_BB_API_KEY
       }`;
+      // In a real application, you might want to handle VITE_IMAGE_BB_API_KEY security more robustly.
       const imageRes = await axios.post(imageBB_api_key, formData);
       const imageData = imageRes.data.data.url;
 
@@ -63,7 +69,8 @@ const Register = () => {
       console.log(user);
 
       // Update Firebase profile
-      await updateProfileFunction(data.name, data.imageData);
+      // Note: You are passing data.imageData instead of the uploaded image URL (imageData). Corrected below.
+      await updateProfileFunction(data.name, imageData);
 
       // Send to backend
       const userInfo = {
@@ -83,6 +90,7 @@ const Register = () => {
           icon: "success",
         });
         reset();
+        navigate(redirect, {replace: true})
       }
     } catch (err) {
       console.log(err);
@@ -116,6 +124,7 @@ const Register = () => {
           text: "Welcome to Garments System",
           icon: "success",
         });
+        navigate(redirect, {replace: true});
       } else if (res.data.message === "user already exists") {
         Swal.fire({
           icon: "info",
@@ -133,12 +142,14 @@ const Register = () => {
   };
 
   return (
-    <div className="w-[550px] mx-auto glass rounded-2xl bg-white shadow-lg p-6">
-      <form className="card-body" onSubmit={handleSubmit(handleRegister)}>
+    <div className="w-full sm:w-[550px] mx-auto glass rounded-2xl bg-white shadow-lg p-4 sm:p-6 my-8">
+      <form className="card-body p-0" onSubmit={handleSubmit(handleRegister)}>
         <fieldset className="fieldset">
-          <h2 className="text-2xl font-bold mb-4">Register Account</h2>
-          {/* ... Name and Email Section (Unchanged) ... */}
-          <section className="flex gap-4 mb-4">
+          <h2 className="text-2xl font-bold mb-6 text-center sm:text-left">
+            Register Account
+          </h2>
+          {/* Name and Email Section: Changed flex gap-4 mb-4 to handle wrapping on small screens */}
+          <section className="flex flex-col sm:flex-row gap-4 mb-4">
             {/* Name */}
             <div className="flex flex-col gap-2 w-full">
               <label className="label text-gray-700">Name</label>
@@ -182,14 +193,15 @@ const Register = () => {
             </div>
           </section>
 
-          {/* ... Photo and Role Section ... */}
-          <section className="flex gap-4 mb-6">
+          {/* Photo and Role Section: Changed flex gap-4 mb-6 to handle wrapping on small screens */}
+          <section className="flex flex-col sm:flex-row gap-4 mb-6">
             {/* Image (Photo) */}
             <div className="flex flex-col gap-2 w-full">
               <label className="label text-gray-700">Choose your photo</label>
+              {/* Adjusted file input padding to look better */}
               <input
                 type="file"
-                className={`file-input outline-0 border p-2 rounded ${
+                className={`file-input outline-0 border p-1 rounded ${
                   errors.photo ? "border-red-500" : "border-gray-300"
                 }`}
                 {...register("photo", { required: "Photo is required" })}
@@ -221,8 +233,8 @@ const Register = () => {
             </div>
           </section>
 
-          {/* New Section for Password and Confirm Password */}
-          <section className="flex gap-4 mb-4">
+          {/* Password and Confirm Password Section: Changed flex gap-4 mb-4 to handle wrapping on small screens */}
+          <section className="flex flex-col sm:flex-row gap-4 mb-4">
             {/* 1. Password Field */}
             <div className="flex flex-col gap-2 w-full">
               <label className="label text-gray-700">Password</label>
@@ -255,7 +267,7 @@ const Register = () => {
               )}
             </div>
 
-            {/* 2. Confirm Password Field (NEW) */}
+            {/* 2. Confirm Password Field */}
             <div className="flex flex-col gap-2 w-full">
               <label className="label text-gray-700">Confirm Password</label>
               <div className="relative w-full">
@@ -293,19 +305,9 @@ const Register = () => {
             </div>
           </section>
 
-          <section className="text-center">
-            <p>
-              Already have an account ?{" "}
-              {/* Note: Use react-router-dom Link component */}
-              <Link to="/auth/login" className="text-blue-500">
-                Login
-              </Link>
-            </p>
-          </section>
-
           <button
             type="submit"
-            className="btn btn-neutral mt-4 font-bold py-2 px-4 rounded transition duration-200 w-full"
+            className="btn btn-neutral mt-6 font-bold py-2 px-4 rounded transition duration-200 w-full hover:bg-gray-800"
           >
             Register
           </button>
@@ -315,13 +317,23 @@ const Register = () => {
       {/* sign in with google */}
       <div className="flex flex-col justify-center items-center mt-4">
         <div className="divider w-3/4 mx-auto text-gray-500">OR</div>
-        <h4 className="font-semibold mb-2">Connect with socials</h4>
         <button
           className="cursor-pointer border border-gray-300 p-2 rounded-full hover:bg-gray-50 transition duration-150"
           onClick={handleGoogleLogin}
         >
           <FcGoogle size={26} />
         </button>
+        <h4 className="font-semibold mb-2">Connect with socials</h4>
+
+        <section className="text-center">
+          <p>
+            Already have an account ?{" "}
+            {/* Note: Use react-router-dom Link component */}
+            <Link to="/auth/login" className="text-blue-500 hover:underline">
+              Login
+            </Link>
+          </p>
+        </section>
       </div>
     </div>
   );
