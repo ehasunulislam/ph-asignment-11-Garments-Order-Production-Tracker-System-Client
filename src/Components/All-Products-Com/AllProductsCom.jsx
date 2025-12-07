@@ -26,7 +26,7 @@ const AllProductsCom = () => {
         );
       }
   return (
-    <div className='grid grid-cols-1 md:grid-col-2 lg:grid-cols-3 gap-3 px-18 mx-auto'>
+    <div className='grid grid-cols-1 md:grid-col-2 lg:grid-cols-3 gap-3 px-18 mx-auto pb-10'>
         {data.map((item) => {
         return (
           <Link to="/">

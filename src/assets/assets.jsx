@@ -8,6 +8,8 @@ import sr2 from "./sr2.png";
 import sr3 from "./sr3.png";
 import sr4 from "./sr4.png";
 
+import factory from "./factory.webp"
+
 // animation
 import error from "./animation/error.json"
 import pageLoading from './animation/page-loading.json'
@@ -15,7 +17,8 @@ import pageLoading from './animation/page-loading.json'
 export const assets = {
   logo,
   s1, s2, s3, s4,
-  error, pageLoading
+  error, pageLoading,
+  factory
 };
 
 
