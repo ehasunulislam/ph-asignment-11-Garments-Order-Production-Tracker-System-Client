@@ -11,6 +11,7 @@ import PrivateRoute from "../Private-Route/PrivateRoute";
 import SellProduct from "../../Page/Dashboard/Sell-Product/SellProduct";
 import AllProducts from "../../Page/All-Products/AllProducts";
 import About from "../../Page/About/About";
+import Contact from "../../Page/Contact/Contact";
 
 export const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
             {
                 path: "about",
                 Component: About
+            },
+            {
+                path: "contact",
+                Component: Contact,
             }
         ]
     },

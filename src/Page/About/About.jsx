@@ -1,18 +1,17 @@
 import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { assets } from "../../assets/assets";
+import Title from "../../Components/Title/Title";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-white font-semibold text-gray-800">
+    <div className="bg-white font-semibold text-gray-800">
       
       {/* Hero Section - About Us */}
-      <section className="pt-32 pb-20 px-6 md:px-20 lg:px-40 text-center">
+      <section className="pb-20 px-6 md:px-20 lg:px-40 text-center">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-[#222934]">
-            About Us
-          </h1>
-          <div className="w-32 h-1 bg-indigo-600 mx-auto mt-6 mb-8"></div>
+          <Title text2={"About Us"} />
+          <div className="w-32 h-1 bg-gray-300 mx-auto mb-4"></div>
 
           <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto mt-8">
             We are building the <span className="font-bold text-[#222934]">future of garment manufacturing</span> —
@@ -30,7 +29,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl font-bold text-[#222934] mb-6">Our Story</h2>
-            <div className="w-20 h-1 bg-indigo-600 mb-8"></div>
+            <div className="w-20 h-1 bg-gray-300 mb-8"></div>
             
             <p className="text-gray-700 leading-relaxed text-lg">
               It all started in a small garment factory in 2023. Orders were delayed, fabric consumption was guessed, production status lived only in WhatsApp groups, and no one knew the real progress until it was too late.
@@ -86,7 +85,7 @@ const About = () => {
       <section className="py-20 px-6 md:px-20 lg:px-40 bg-gray-100 text-black">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">We Believe In</h2>
-          <div className="w-32 h-1 bg-indigo-400 mx-auto mb-12"></div>
+          <div className="w-32 h-1 bg-gray-300 mx-auto mb-12"></div>
 
           <div className="grid md:grid-cols-3 gap-10">
             <div className="bg-white border border-gray-200 backdrop-blur-sm p-8 rounded-2xl">
