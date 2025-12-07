@@ -10,7 +10,7 @@ const LatestProductCom = () => {
 
   useEffect(() => {
     axiosInstance
-      .get("/projects")
+      .get("/products")
       .then((res) => {
         setData(res.data);
         setLoading(false);

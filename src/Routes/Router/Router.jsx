@@ -9,6 +9,7 @@ import DashBoardLayout from "../../Layout/DashBoard-Layout/DashBoardLayout";
 import AdminProfile from "../../Page/Dashboard/AdminProfile";
 import PrivateRoute from "../Private-Route/PrivateRoute";
 import SellProduct from "../../Page/Dashboard/Sell-Product/SellProduct";
+import AllProducts from "../../Page/All-Products/AllProducts";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: "all-Products",
+                Component: AllProducts
             }
         ]
     },
