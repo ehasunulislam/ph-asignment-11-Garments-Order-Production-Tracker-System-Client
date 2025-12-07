@@ -2,6 +2,7 @@ import React from 'react'
 import Slider from './Slider/Slider'
 import Service from './Services/Service'
 import LatestProduct from './Latest-Product/LatestProduct'
+import NewsLetter from './NewsLetter/NewsLetter'
 
 const Home = () => {
   return (
@@ -11,6 +12,8 @@ const Home = () => {
             <Service />
             <LatestProduct />
         </section>
+
+        <NewsLetter />
     </div>
   )
 }

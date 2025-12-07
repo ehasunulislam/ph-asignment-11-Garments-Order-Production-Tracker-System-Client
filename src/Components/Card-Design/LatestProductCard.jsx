@@ -17,9 +17,9 @@ const LatestProductCard = ({
 
   return (
     <section>
-      <div className="card bg-base-100 w-96 shadow-sm border border-gray-200">
+      <div className="card bg-base-100 w-50 md:w-60 lg:w-89 shadow-sm border border-gray-200">
         <figure
-          className="relative h-48 overflow-hidden rounded-t-xl pt-4"
+          className="relative h-30 md:h-48 overflow-hidden rounded-t-xl pt-4"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
         >
@@ -27,7 +27,7 @@ const LatestProductCard = ({
           <img
             src={image0}
             alt={productName}
-            className={`absolute w-50 object-top transition-opacity duration-500 ${
+            className={`absolute w-30 md:w-50 object-top transition-opacity duration-500 ${
               hover ? "opacity-0" : "opacity-100"
             }`}
           />
@@ -36,14 +36,14 @@ const LatestProductCard = ({
           <img
             src={image1}
             alt={productName}
-            className={`absolute w-50 object-top transition-opacity duration-500 ${
+            className={`absolute w-30 md:w-50 object-top transition-opacity duration-500 ${
               hover ? "opacity-100" : "opacity-0"
             }`}
           />
         </figure>
         <div className="card-body">
           <h2 className="card-title mx-auto">{productName}</h2>
-          <p className="text-justify">{shortDescription}</p>
+          <p className="text-justify text-[0.8rem]">{shortDescription}</p>
           <div className="card-actions">
             <section className="flex gap-3 justify-between items-center">
               <p><span className="text-gray-600">category:</span> {category}</p>
