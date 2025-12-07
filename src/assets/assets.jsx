@@ -10,11 +10,12 @@ import sr4 from "./sr4.png";
 
 // animation
 import error from "./animation/error.json"
+import pageLoading from './animation/page-loading.json'
 
 export const assets = {
   logo,
   s1, s2, s3, s4,
-  error
+  error, pageLoading
 };
 
 

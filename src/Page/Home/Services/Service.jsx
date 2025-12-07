@@ -3,7 +3,7 @@ import { services } from '../../../assets/assets'
 
 const Service = () => {
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-10 gap-6'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-10 gap-6 justify-items-center'>
         {
             services.map((item) => {
                 return (
