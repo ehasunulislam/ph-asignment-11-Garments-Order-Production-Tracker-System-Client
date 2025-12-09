@@ -60,8 +60,8 @@ const CartInfo = () => {
                   <tr key={item._id}>
                     <th>{index + 1}</th>
                     <td>{item.productName}</td>
-                    <td>{item.orderedQty}</td>
-                    <td>{item.totalPrice}</td>
+                    <td>{item.orderedQty} pcs</td>
+                    <td>${item.totalPrice}</td>
                     <td>{item.createdAt}</td>
                     <th>
                       <button className="btn btn-sm bg-secondary text-white">

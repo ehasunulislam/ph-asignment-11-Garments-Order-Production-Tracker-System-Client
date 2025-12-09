@@ -90,6 +90,7 @@ const ProductDetails = () => {
         productName: product.productName,
         orderedQty: orderQty,
         userEmail: user?.email,
+        paymentStatus: ""
       });
 
       if (res.data.success) {
