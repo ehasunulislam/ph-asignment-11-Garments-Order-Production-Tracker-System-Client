@@ -13,12 +13,13 @@ import factory from "./factory.webp"
 // animation
 import error from "./animation/error.json"
 import pageLoading from './animation/page-loading.json'
+import dataLoading from "./animation/data.json"
 
 export const assets = {
   logo,
   s1, s2, s3, s4,
-  error, pageLoading,
-  factory
+  error, pageLoading, dataLoading,
+  factory,
 };
 
 
