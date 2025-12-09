@@ -87,6 +87,7 @@ const ProductDetails = () => {
     try {
       const res = await axiosInstance.post("/carts", {
         productId: id,
+        productName: product.productName,
         orderedQty: orderQty,
         userEmail: user?.email,
       });

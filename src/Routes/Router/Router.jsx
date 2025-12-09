@@ -13,6 +13,7 @@ import AllProducts from "../../Page/All-Products/AllProducts";
 import About from "../../Page/About/About";
 import Contact from "../../Page/Contact/Contact";
 import ProductDetails from "../../Page/Details/ProductDetails";
+import CartInfo from "../../Page/Dashboard/Cart-Info/CartInfo";
 
 export const router = createBrowserRouter([
     {
@@ -74,7 +75,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "cart-info",
-                // Component: 
+                Component: CartInfo
             }
         ]
     }
