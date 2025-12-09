@@ -5,6 +5,7 @@ import { assets } from "../../assets/assets";
 import "./Navbar.css";
 import useAuthInfo from "../Hooks/useAuthInfo";
 import Swal from "sweetalert2";
+import { PiShoppingCartLight } from "react-icons/pi";
 
 const Navbar = () => {
   const { user, signOutFunction } = useAuthInfo();
@@ -99,6 +100,15 @@ const Navbar = () => {
           <button className="btn btn-sm ms-3" onClick={handleSignOut}>
             Log out
           </button>
+        ) : (
+          ""
+        )}
+
+        {user ? (
+          <div className="bg-white px-2 py-2 rounded-full indicator ms-3">
+            <span className="indicator-item bg-secondary px-2 py-1 rounded-full text-[0.6rem] font-semibold">12</span>
+            <PiShoppingCartLight  className="text-black"/>
+          </div>
         ) : (
           ""
         )}

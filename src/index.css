@@ -7,8 +7,8 @@
   name: "light";
   default: true;
   --color-primary: #222934;
-  /* --color-secondary: #DADADA;
-  --color-accent: #03373D; */
+  --color-secondary: #F55266;
+  /* --color-accent: #03373D; */
 }
 
 body {

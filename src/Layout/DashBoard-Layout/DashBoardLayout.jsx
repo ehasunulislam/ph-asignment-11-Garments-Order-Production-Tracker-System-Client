@@ -4,6 +4,8 @@ import { Link, Outlet } from "react-router";
 import { assets } from "../../assets/assets";
 import { CgProfile } from "react-icons/cg";
 import { FaSellcast } from "react-icons/fa";
+import { MdOutlineShoppingCart } from "react-icons/md";
+
 
 const DashBoardLayout = () => {
   return (
@@ -55,7 +57,7 @@ const DashBoardLayout = () => {
               </Link>
             </li>
 
-            {/* Sell Product */}
+            {/* Sell Your Product */}
             <li>
               <Link
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -64,6 +66,18 @@ const DashBoardLayout = () => {
               >
                 <FaSellcast  size={25} />
                 <span className="is-drawer-close:hidden">Sell Your Product</span>
+              </Link>
+            </li>
+
+            {/* Add-To-Cart Info */}
+            <li>
+              <Link
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Cart Info"
+                to="/dashboard/cart-info"
+              >
+                <MdOutlineShoppingCart size={25} />
+                <span className="is-drawer-close:hidden">Cart Info</span>
               </Link>
             </li>
           </ul>
