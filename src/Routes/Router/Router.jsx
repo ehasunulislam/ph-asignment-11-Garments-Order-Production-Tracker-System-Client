@@ -12,6 +12,7 @@ import SellProduct from "../../Page/Dashboard/Sell-Product/SellProduct";
 import AllProducts from "../../Page/All-Products/AllProducts";
 import About from "../../Page/About/About";
 import Contact from "../../Page/Contact/Contact";
+import ProductDetails from "../../Page/Details/ProductDetails";
 
 export const router = createBrowserRouter([
     {
@@ -24,16 +25,20 @@ export const router = createBrowserRouter([
                 Component: Home
             },
             {
-                path: "all-Products",
-                Component: AllProducts
-            },
-            {
                 path: "about",
                 Component: About
             },
             {
                 path: "contact",
                 Component: Contact,
+            },
+            {
+                path: "all-products",
+                Component: AllProducts
+            },
+            {
+                path: "details/:id",
+                Component: ProductDetails
             }
         ]
     },

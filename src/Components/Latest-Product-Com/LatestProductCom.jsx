@@ -31,17 +31,15 @@ const LatestProductCom = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4 py-5">
       {data.map((item) => {
         return (
-          <Link to="">
-            <div key={item._id}>
-              <LatestProductCard
-                images={item.images}
-                productName={item.productName}
-                description={item.description}
-                category={item.category}
-                price={item.price}
-                createdBy={item.createdBy}
-              />
-            </div>
+          <Link key={item._id} to={`/details/${item._id}`}>
+            <LatestProductCard
+              images={item.images}
+              productName={item.productName}
+              description={item.description}
+              category={item.category}
+              price={item.price}
+              createdBy={item.createdBy}
+            />
           </Link>
         );
       })}
