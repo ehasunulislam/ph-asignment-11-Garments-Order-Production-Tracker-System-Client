@@ -6,8 +6,13 @@ import { CgProfile } from "react-icons/cg";
 import { FaSellcast } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { TbHomeFilled } from "react-icons/tb";
+import useRole from "../../Components/Hooks/useRole";
+// import useAuthInfo from "../../Components/Hooks/useAuthInfo";
 
 const DashBoardLayout = () => {
+  const { role } = useRole();
+  // const {user} = useAuthInfo();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -70,30 +75,35 @@ const DashBoardLayout = () => {
             </li>
 
             {/* Sell Your Product - seller */}
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Sell Your Product"
-                to="/dashboard/sell-product"
-              >
-                <FaSellcast size={25} />
-                <span className="is-drawer-close:hidden">
-                  Sell Your Product
-                </span>
-              </Link>
-            </li>
+            {role === "manager" && (
+              // sell a product from
+              <li>
+                <Link
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Sell Your Product"
+                  to="/dashboard/sell-product"
+                >
+                  <FaSellcast size={25} />
+                  <span className="is-drawer-close:hidden">
+                    Sell Your Product
+                  </span>
+                </Link>
+              </li>
+            )}
 
             {/* Add-To-Cart Info - buyer */}
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Cart Info"
-                to="/dashboard/cart-info"
-              >
-                <MdOutlineShoppingCart size={25} />
-                <span className="is-drawer-close:hidden">Cart Info</span>
-              </Link>
-            </li>
+            {role === "buyer" && (
+              <li>
+                <Link
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Cart Info"
+                  to="/dashboard/cart-info"
+                >
+                  <MdOutlineShoppingCart size={25} />
+                  <span className="is-drawer-close:hidden">Cart Info</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
