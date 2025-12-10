@@ -8,6 +8,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { TbHomeFilled } from "react-icons/tb";
 import useRole from "../../Components/Hooks/useRole";
 import { TiInfoLargeOutline } from "react-icons/ti";
+import { FaUsersLine } from "react-icons/fa6";
 // import useAuthInfo from "../../Components/Hooks/useAuthInfo";
 
 const DashBoardLayout = () => {
@@ -100,9 +101,7 @@ const DashBoardLayout = () => {
                     to="/dashboard/sell-info"
                   >
                     <TiInfoLargeOutline size={25} />
-                    <span className="is-drawer-close:hidden">
-                      Sell Info
-                    </span>
+                    <span className="is-drawer-close:hidden">Sell Info</span>
                   </Link>
                 </li>
               </>
@@ -110,17 +109,21 @@ const DashBoardLayout = () => {
 
             {/* Add-To-Cart Info - buyer */}
             {role === "buyer" && (
-              <li>
-                <Link
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Cart Info"
-                  to="/dashboard/cart-info"
-                >
-                  <MdOutlineShoppingCart size={25} />
-                  <span className="is-drawer-close:hidden">Cart Info</span>
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Cart Info"
+                    to="/dashboard/cart-info"
+                  >
+                    <MdOutlineShoppingCart size={25} />
+                    <span className="is-drawer-close:hidden">Cart Info</span>
+                  </Link>
+                </li>
+              </>
             )}
+
+            
           </ul>
         </div>
       </div>
