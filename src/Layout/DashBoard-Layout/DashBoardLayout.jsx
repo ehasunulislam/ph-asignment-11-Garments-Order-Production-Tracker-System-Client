@@ -5,7 +5,7 @@ import { assets } from "../../assets/assets";
 import { CgProfile } from "react-icons/cg";
 import { FaSellcast } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
-
+import { TbHomeFilled } from "react-icons/tb";
 
 const DashBoardLayout = () => {
   return (
@@ -44,7 +44,19 @@ const DashBoardLayout = () => {
         ></label>
         <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
           {/* Sidebar content here */}
-          <ul className="menu w-full grow">
+          <ul className="menu w-full grow mt-5">
+            {/* Home page */}
+            <li>
+              <Link
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Home"
+                to="/"
+              >
+                <TbHomeFilled size={25} />
+                <span className="is-drawer-close:hidden">Home</span>
+              </Link>
+            </li>
+
             {/* user profile */}
             <li>
               <Link
@@ -57,19 +69,21 @@ const DashBoardLayout = () => {
               </Link>
             </li>
 
-            {/* Sell Your Product */}
+            {/* Sell Your Product - seller */}
             <li>
               <Link
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Sell Your Product"
                 to="/dashboard/sell-product"
               >
-                <FaSellcast  size={25} />
-                <span className="is-drawer-close:hidden">Sell Your Product</span>
+                <FaSellcast size={25} />
+                <span className="is-drawer-close:hidden">
+                  Sell Your Product
+                </span>
               </Link>
             </li>
 
-            {/* Add-To-Cart Info */}
+            {/* Add-To-Cart Info - buyer */}
             <li>
               <Link
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"

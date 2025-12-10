@@ -12,11 +12,7 @@ const CartInfo = () => {
   const { user } = useAuthInfo();
 
   // tanstack query data..
-  const {
-    data: cartItems = [],
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: cartItems = [], isLoading, error } = useQuery({
     queryKey: ["cartItems", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {

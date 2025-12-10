@@ -6,10 +6,24 @@ import "./Navbar.css";
 import useAuthInfo from "../Hooks/useAuthInfo";
 import Swal from "sweetalert2";
 import { PiShoppingCartLight } from "react-icons/pi";
+import useAxios from "../Hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, signOutFunction } = useAuthInfo();
+  const axiosInstance = useAxios();
 
+  // tanstack query data..
+  const { data: cartItems = [], } = useQuery({
+    queryKey: ["cartItems", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/carts/${user.email}`);
+      return res.data.data;
+    },
+  });
+
+  // handle signout function
   const handleSignOut = () => {
     signOutFunction()
       .then(() => {
@@ -105,10 +119,10 @@ const Navbar = () => {
         )}
 
         {user ? (
-          <div className="bg-white px-2 py-2 rounded-full indicator ms-3">
-            <span className="indicator-item bg-secondary px-2 py-1 rounded-full text-[0.6rem] font-semibold">12</span>
+          <Link className="bg-white px-2 py-2 rounded-full indicator ms-3" to="/dashboard/cart-info">
+            <span className="indicator-item bg-secondary px-2 py-1 rounded-full text-[0.6rem] font-semibold">{cartItems.length}</span>
             <PiShoppingCartLight  className="text-black"/>
-          </div>
+          </Link>
         ) : (
           ""
         )}
