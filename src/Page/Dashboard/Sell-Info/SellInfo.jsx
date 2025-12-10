@@ -7,12 +7,14 @@ import useAxios from "../../../Components/Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import PageLoading from "../../../Components/Loading/PageLoading";
 import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
+import Swal from "sweetalert2";
 
 const SellInfo = () => {
   const { user } = useAuthInfo();
   const axiosInstance = useAxios();
 
-  const { data: products = [], isLoading } = useQuery({
+  // tanstack query
+  const { data: products = [], isLoading, refetch, } = useQuery({
     queryKey: ["my-products", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -20,6 +22,33 @@ const SellInfo = () => {
       return res.data;
     },
   });
+
+  //   handle Delete for single product
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const res = await axiosInstance.delete(`/delete-product/${id}`);
+
+        if (res.data.deletedCount > 0) {
+          Swal.fire("Deleted!", "Your product has been deleted.", "success");
+          
+          refetch(); 
+        }
+      }
+    } catch (err) {
+      Swal.fire("Error", "Failed to delete the product", err.message);
+    }
+  };
 
   if (isLoading) return <PageLoading />;
 
@@ -89,7 +118,8 @@ const SellInfo = () => {
                       <button className="btn btn-sm bg-primary text-white">
                         <FiEdit3 />
                       </button>
-                      <button className="btn btn-sm bg-secondary text-white">
+
+                      <button className="btn btn-sm bg-secondary text-white" onClick={() => handleDelete(item._id)}>
                         <ImBin />
                       </button>
                     </div>
