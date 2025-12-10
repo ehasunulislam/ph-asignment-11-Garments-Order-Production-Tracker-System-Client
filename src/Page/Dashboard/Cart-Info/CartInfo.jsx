@@ -5,11 +5,13 @@ import useAuthInfo from "../../../Components/Hooks/useAuthInfo";
 import { useQuery } from "@tanstack/react-query";
 import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
 import PageLoading from "../../../Components/Loading/PageLoading";
+import { Link } from "react-router";
 
 const CartInfo = () => {
   const axiosInstance = useAxios();
   const { user } = useAuthInfo();
 
+  // tanstack query data..
   const {
     data: cartItems = [],
     isLoading,
@@ -22,6 +24,27 @@ const CartInfo = () => {
       return res.data.data;
     },
   });
+
+  // handle payment method
+  const handlePayment = async (item) => {
+    try {
+      const res = await axiosInstance.post("/create-checkout-session", {
+        cartId: item._id,
+        productName: item.productName,
+        totalPrice: item.totalPrice,
+        userEmail: user?.email,
+      });
+
+      const checkoutUrl = res.data.url;
+
+      // redirect safely inside useEffect
+      window.setTimeout(() => {
+        window.location.assign(checkoutUrl);
+      }, 100);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (isLoading) {
     return <PageLoading />;
@@ -62,11 +85,28 @@ const CartInfo = () => {
                     <td>{item.productName}</td>
                     <td>{item.orderedQty} pcs</td>
                     <td>${item.totalPrice}</td>
-                    <td>{item.createdAt}</td>
+                    <td>
+                      {new Date(item.createdAt).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </td>
                     <th>
-                      <button className="btn btn-sm bg-secondary text-white">
-                        Pay
-                      </button>
+                      {item.paymentStatus === "paid" ? (
+                        <button className="btn btn-sm bg-primary text-white">
+                          Paid
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-sm bg-secondary text-white"
+                          onClick={() => handlePayment(item)}
+                        >
+                          Pay
+                        </button>
+                      )}
                     </th>
                   </tr>
                 );

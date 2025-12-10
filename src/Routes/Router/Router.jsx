@@ -14,69 +14,83 @@ import About from "../../Page/About/About";
 import Contact from "../../Page/Contact/Contact";
 import ProductDetails from "../../Page/Details/ProductDetails";
 import CartInfo from "../../Page/Dashboard/Cart-Info/CartInfo";
+import PaymentSuccess from "../../Page/Dashboard/Payment/PaymentSuccess";
+import PaymentCancelled from "../../Page/Dashboard/Payment/PaymentCancelled";
 
 export const router = createBrowserRouter([
-    {
-        path: "/",
-        errorElement: <Error></Error>,
-        element: <HomeLayout></HomeLayout>,
-        children: [
-            {
-                index: true,
-                Component: Home
-            },
-            {
-                path: "about",
-                Component: About
-            },
-            {
-                path: "contact",
-                Component: Contact,
-            },
-            {
-                path: "all-products",
-                Component: AllProducts
-            },
-            {
-                path: "details/:id",
-                Component: ProductDetails
-            }
-        ]
-    },
-    {
-        path: "auth",
-        element: <AuthLayout></AuthLayout>,
-        children: [
-            {
-                path: "register",
-                Component: Register,
-            },
-            {
-                path: "login",
-                Component: Login,
-            }
-        ]
-    },
-    {
-        path: "dashboard",
-        element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
-        children: [
-            {
-                path: "",
-                element: <Navigate to="admin-profile"></Navigate>
-            }
-            ,{
-                path: "admin-profile",
-                Component: AdminProfile,
-            },
-            {
-                path: "sell-product",
-                Component: SellProduct,
-            },
-            {
-                path: "cart-info",
-                Component: CartInfo
-            }
-        ]
-    }
-])
+  {
+    path: "/",
+    errorElement: <Error></Error>,
+    element: <HomeLayout></HomeLayout>,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "about",
+        Component: About,
+      },
+      {
+        path: "contact",
+        Component: Contact,
+      },
+      {
+        path: "all-products",
+        Component: AllProducts,
+      },
+      {
+        path: "details/:id",
+        Component: ProductDetails,
+      },
+    ],
+  },
+  {
+    path: "auth",
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: "register",
+        Component: Register,
+      },
+      {
+        path: "login",
+        Component: Login,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "",
+        element: <Navigate to="admin-profile"></Navigate>,
+      },
+      {
+        path: "admin-profile",
+        Component: AdminProfile,
+      },
+      {
+        path: "sell-product",
+        Component: SellProduct,
+      },
+      {
+        path: "cart-info",
+        Component: CartInfo,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancelled,
+      },
+    ],
+  },
+]);

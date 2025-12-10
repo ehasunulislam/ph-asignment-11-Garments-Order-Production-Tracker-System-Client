@@ -14,11 +14,13 @@ import factory from "./factory.webp"
 import error from "./animation/error.json"
 import pageLoading from './animation/page-loading.json'
 import dataLoading from "./animation/data.json"
+import paymentSuccess from "./animation/payment-success.json"
+import paymentCancel from "./animation/payment-failed.json"
 
 export const assets = {
   logo,
   s1, s2, s3, s4,
-  error, pageLoading, dataLoading,
+  error, pageLoading, dataLoading, paymentSuccess, paymentCancel,
   factory,
 };
 
