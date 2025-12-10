@@ -32,6 +32,33 @@ const UserManagement = () => {
   }
 
 
+   //  handle Delete user
+   const handleDeleteUser = async (id) => {
+    try{
+        const deleteConfirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if(deleteConfirmation.isConfirmed) {
+        const res = await axiosInstance.delete(`/delete-user/${id}`);
+        if (res.data.deletedCount > 0) {
+          Swal.fire("Deleted!", "User has been deleted.", "success");
+          refetch();
+        }
+      }
+    }
+    catch(err) {
+        Swal.fire("Error", "Failed to delete user", err.message)
+    }
+   }
+
+
    if (isLoading) return <PageLoading />;
 
   return (
@@ -90,7 +117,7 @@ const UserManagement = () => {
                     </button>
                     <button
                       className="btn btn-sm bg-secondary text-white font-normal"
-                    //   onClick={() => handleDelete(user._id)}
+                      onClick={() => handleDeleteUser(user._id)}
                     >
                       Delete
                     </button>
