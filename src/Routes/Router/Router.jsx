@@ -17,6 +17,7 @@ import CartInfo from "../../Page/Dashboard/Cart-Info/CartInfo";
 import PaymentSuccess from "../../Page/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../../Page/Dashboard/Payment/PaymentCancelled";
 import SellInfo from "../../Page/Dashboard/Sell-Info/SellInfo";
+import UserManagement from "../../Page/Dashboard/User-Management/UserManagement";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: "admin-profile",
         Component: AdminProfile,
+      },
+      {
+        path: "user-management",
+        Component: UserManagement,
       },
       {
         path: "sell-product",

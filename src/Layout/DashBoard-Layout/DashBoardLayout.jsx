@@ -123,7 +123,23 @@ const DashBoardLayout = () => {
               </>
             )}
 
-            
+            {/* Admin Status URL */}
+            {role === "admin" && (
+              <>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="user management"
+                    to="/dashboard/user-management"
+                  >
+                    <FaUsersLine size={25} />
+                    <span className="is-drawer-close:hidden">
+                      User Management
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
