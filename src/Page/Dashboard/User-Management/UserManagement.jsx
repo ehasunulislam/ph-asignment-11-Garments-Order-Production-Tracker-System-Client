@@ -4,9 +4,11 @@ import useAxios from "../../../Components/Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import PageLoading from "../../../Components/Loading/PageLoading";
 import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
+import Swal from "sweetalert2";
 
 const UserManagement = () => {
   const axiosInstance = useAxios();
+
   const { data: users = [], isLoading, refetch, } = useQuery({
     queryKey: ["all-users"],
     queryFn: async () => {
@@ -14,6 +16,21 @@ const UserManagement = () => {
       return res.data;
     },
   });
+
+  // handle Approve user
+  const handleApproveUser = async (id) => {
+    try{
+      const res = await axiosInstance.put(`/approve-user/${id}`);
+      if (res.data.success) {
+        Swal.fire("Approved!", "User has been approved.", "success");
+        refetch();
+      }
+    }
+    catch(err) {
+        Swal.fire("Error", "Failed to approve user", err.message);
+    }
+  }
+
 
    if (isLoading) return <PageLoading />;
 
@@ -67,7 +84,7 @@ const UserManagement = () => {
                   <td className="flex gap-2">
                     <button
                       className="btn btn-sm bg-primary text-white font-normal"
-                    //   onClick={() => handleApprove(user._id)}
+                      onClick={() => handleApproveUser(user._id)}
                     >
                       Approve
                     </button>
