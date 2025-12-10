@@ -16,6 +16,7 @@ import ProductDetails from "../../Page/Details/ProductDetails";
 import CartInfo from "../../Page/Dashboard/Cart-Info/CartInfo";
 import PaymentSuccess from "../../Page/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../../Page/Dashboard/Payment/PaymentCancelled";
+import SellInfo from "../../Page/Dashboard/Sell-Info/SellInfo";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
       {
         path: "sell-product",
         Component: SellProduct,
+      },
+      {
+        path: "sell-info",
+        Component: SellInfo
       },
       {
         path: "cart-info",

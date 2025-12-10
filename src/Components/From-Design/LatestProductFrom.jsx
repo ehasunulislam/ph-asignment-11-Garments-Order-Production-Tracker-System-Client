@@ -4,6 +4,7 @@ import useAxios from "../Hooks/useAxios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Title from "../Title/Title";
 
 const LatestProductFrom = () => {
   const { user } = useAuthInfo();
@@ -74,15 +75,17 @@ const LatestProductFrom = () => {
 
   return (
     // Outer Container: Min-height and padding adjusted for mobile (p-6)
-    <div className="mx-auto py-10 bg-gray-50 min-h-screen">
+    <div className="mx-auto min-h-screen">
+      <Title text2={"Sell Your Product"} />
+
       <form
         // Form Styling: Padding responsive (p-6 on mobile, p-10 on larger)
-        className="bg-white p-6 sm:p-10 rounded-3xl shadow-xl space-y-6 max-w-4xl mx-auto"
+        className="p-6 sm:p-10 rounded-[10px] shadow-xl space-y-6 max-w-4xl mx-auto border border-gray-300"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 text-gray-800 border-b-2 pb-4">
-          📦 Add New Product
-        </h2>
+        {/* <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-6 text-gray-800 border-b-2 pb-4">
+           Add New Product
+        </h2> */}
 
         {/* --- User/Email Section (Responsive) --- */}
         {/* Stacks on mobile (grid-cols-1) and goes back to 2 columns on medium screens (md:grid-cols-2) */}

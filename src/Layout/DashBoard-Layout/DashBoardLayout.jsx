@@ -7,6 +7,7 @@ import { FaSellcast } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { TbHomeFilled } from "react-icons/tb";
 import useRole from "../../Components/Hooks/useRole";
+import { TiInfoLargeOutline } from "react-icons/ti";
 // import useAuthInfo from "../../Components/Hooks/useAuthInfo";
 
 const DashBoardLayout = () => {
@@ -74,21 +75,37 @@ const DashBoardLayout = () => {
               </Link>
             </li>
 
-            {/* Sell Your Product - seller */}
+            {/* Sell Your Product - manager */}
             {role === "manager" && (
-              // sell a product from
-              <li>
-                <Link
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Sell Your Product"
-                  to="/dashboard/sell-product"
-                >
-                  <FaSellcast size={25} />
-                  <span className="is-drawer-close:hidden">
-                    Sell Your Product
-                  </span>
-                </Link>
-              </li>
+              <>
+                {/*  sell a product from */}
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Sell Your Product"
+                    to="/dashboard/sell-product"
+                  >
+                    <FaSellcast size={25} />
+                    <span className="is-drawer-close:hidden">
+                      Sell Your Product
+                    </span>
+                  </Link>
+                </li>
+
+                {/* sell info table */}
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="sell info"
+                    to="/dashboard/sell-info"
+                  >
+                    <TiInfoLargeOutline size={25} />
+                    <span className="is-drawer-close:hidden">
+                      Sell Info
+                    </span>
+                  </Link>
+                </li>
+              </>
             )}
 
             {/* Add-To-Cart Info - buyer */}
