@@ -3,7 +3,7 @@ import { HiArrowRightOnRectangle } from "react-icons/hi2";
 import { Link, Outlet } from "react-router";
 import { assets } from "../../assets/assets";
 import { CgProfile } from "react-icons/cg";
-import { FaSellcast } from "react-icons/fa";
+import { FaSellcast, FaUserCog } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { TbHomeFilled } from "react-icons/tb";
 import useRole from "../../Components/Hooks/useRole";
@@ -126,6 +126,7 @@ const DashBoardLayout = () => {
             {/* Admin Status URL */}
             {role === "admin" && (
               <>
+              {/* user management */}
                 <li>
                   <Link
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -135,6 +136,21 @@ const DashBoardLayout = () => {
                     <FaUsersLine size={25} />
                     <span className="is-drawer-close:hidden">
                       User Management
+                    </span>
+                  </Link>
+                </li>
+
+
+                {/* user role management */}
+                 <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="user role"
+                    to="/dashboard/user-management"
+                  >
+                    <FaUserCog size={25} />
+                    <span className="is-drawer-close:hidden">
+                      User Role
                     </span>
                   </Link>
                 </li>

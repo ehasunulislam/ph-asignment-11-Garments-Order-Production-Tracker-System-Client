@@ -9,7 +9,11 @@ import Swal from "sweetalert2";
 const UserManagement = () => {
   const axiosInstance = useAxios();
 
-  const { data: users = [], isLoading, refetch, } = useQuery({
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["all-users"],
     queryFn: async () => {
       const res = await axiosInstance.get("/all-user");
@@ -19,23 +23,21 @@ const UserManagement = () => {
 
   // handle Approve user
   const handleApproveUser = async (id) => {
-    try{
+    try {
       const res = await axiosInstance.put(`/approve-user/${id}`);
       if (res.data.success) {
         Swal.fire("Approved!", "User has been approved.", "success");
         refetch();
       }
+    } catch (err) {
+      Swal.fire("Error", "Failed to approve user", err.message);
     }
-    catch(err) {
-        Swal.fire("Error", "Failed to approve user", err.message);
-    }
-  }
+  };
 
-
-   //  handle Delete user
-   const handleDeleteUser = async (id) => {
-    try{
-        const deleteConfirmation = await Swal.fire({
+  //  handle Delete user
+  const handleDeleteUser = async (id) => {
+    try {
+      const deleteConfirmation = await Swal.fire({
         title: "Are you sure?",
         text: "This action cannot be undone!",
         icon: "warning",
@@ -45,21 +47,19 @@ const UserManagement = () => {
         confirmButtonText: "Yes, delete it!",
       });
 
-      if(deleteConfirmation.isConfirmed) {
+      if (deleteConfirmation.isConfirmed) {
         const res = await axiosInstance.delete(`/delete-user/${id}`);
         if (res.data.deletedCount > 0) {
           Swal.fire("Deleted!", "User has been deleted.", "success");
           refetch();
         }
       }
+    } catch (err) {
+      Swal.fire("Error", "Failed to delete user", err.message);
     }
-    catch(err) {
-        Swal.fire("Error", "Failed to delete user", err.message)
-    }
-   }
+  };
 
-
-   if (isLoading) return <PageLoading />;
+  if (isLoading) return <PageLoading />;
 
   return (
     <div>
@@ -67,9 +67,9 @@ const UserManagement = () => {
 
       {/* table */}
       <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
+        <table className="table w-full">
+          {/* Table Head hide on mobile */}
+          <thead className="hidden md:table-header-group">
             <tr>
               <th>#</th>
               <th>Image</th>
@@ -79,6 +79,7 @@ const UserManagement = () => {
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
             {users.length === 0 ? (
               <tr>
@@ -88,39 +89,83 @@ const UserManagement = () => {
               </tr>
             ) : (
               users.map((user, index) => (
-                <tr key={user._id}>
-                  <th>{index + 1}</th>
-                  <td>
+                <tr
+                  key={user._id}
+                  className="
+              flex flex-col md:table-row 
+              mb-4 md:mb-0 
+              border md:border-0 
+              rounded-lg md:rounded-none 
+              p-4 md:p-0 
+              bg-white md:bg-transparent 
+              shadow md:shadow-none
+            "
+                >
+                  {/* Index */}
+                  <td className="flex justify-between md:table-cell mb-2 md:mb-0">
+                    <span className="font-semibold md:hidden">#</span>
+                    {index + 1}
+                  </td>
+
+                  {/* Image */}
+                  <td className="flex justify-between items-center md:table-cell mb-2 md:mb-0">
+                    <span className="font-semibold md:hidden">Image</span>
                     <div className="avatar">
                       <div className="mask mask-squircle w-12 h-12">
                         <img
                           src={
-                            user.photoURL || "https://img.daisyui.com/images/profile/demo/2@94.webp"
+                            user.photoURL ||
+                            "https://img.daisyui.com/images/profile/demo/2@94.webp"
                           }
                           alt={user.name}
                         />
                       </div>
                     </div>
                   </td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td className={user.status === "Approved" ? "text-green-500" : "text-red-500"}>
-                    {user.status || "Pending"}
-                   </td>
 
-                  <td className="flex gap-2">
-                    <button
-                      className="btn btn-sm bg-primary text-white font-normal"
-                      onClick={() => handleApproveUser(user._id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="btn btn-sm bg-secondary text-white font-normal"
-                      onClick={() => handleDeleteUser(user._id)}
-                    >
-                      Delete
-                    </button>
+                  {/* Name */}
+                  <td className="flex justify-between md:table-cell mb-2 md:mb-0">
+                    <span className="font-semibold md:hidden">Name</span>
+                    {user.name}
+                  </td>
+
+                  {/* Email */}
+                  <td className="flex justify-between md:table-cell mb-2 md:mb-0">
+                    <span className="font-semibold md:hidden">Email</span>
+                    {user.email}
+                  </td>
+
+                  {/* Status */}
+                  <td
+                    className={`flex justify-between md:table-cell mb-2 md:mb-0 ${
+                      user.status === "Approved"
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    <span className="font-semibold md:hidden">Status</span>
+                    {user.status || "Pending"}
+                  </td>
+
+                  {/* Actions */}
+                  <td className="flex justify-between md:table-cell">
+                    <span className="font-semibold md:hidden">Actions</span>
+
+                    <div className="flex gap-2">
+                      <button
+                        className="btn btn-sm bg-primary text-white font-normal"
+                        onClick={() => handleApproveUser(user._id)}
+                      >
+                        Approve
+                      </button>
+
+                      <button
+                        className="btn btn-sm bg-secondary text-white font-normal"
+                        onClick={() => handleDeleteUser(user._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
