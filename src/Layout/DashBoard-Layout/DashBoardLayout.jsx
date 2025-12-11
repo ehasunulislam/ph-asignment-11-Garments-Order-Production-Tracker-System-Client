@@ -84,7 +84,7 @@ const DashBoardLayout = () => {
             </li>
 
             {/* Sell Your Product - manager */}
-            {role === "manager" && user?.status === "active" && (
+            {role === "manager"  && user?.status === "Approved" && (
               <>
                 {/*  sell a product from */}
                 <li>
@@ -115,7 +115,7 @@ const DashBoardLayout = () => {
             )}
 
             {/* Add-To-Cart Info - buyer */}
-            {role === "buyer" && user?.status === "active" && (
+            {role === "buyer"  && user?.status === "Approved"  && (
               <>
                 <li>
                   <Link

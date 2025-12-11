@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebookF, FaYoutube, FaTelegramPlane } from "react-icon
 
 const NewsLetter = () => {
   return (
-    <section className="bg-[#F5F7FA] py-20 flex flex-col items-center px-10 text-center">
+    <section className="bg-[#F5F7FA] py-20 flex flex-col items-center px-10 text-center mt-5">
       <h2 className="text-[1rem] md:text-2xl font-semibold text-gray-800">
         Sign up to our newsletter
       </h2>

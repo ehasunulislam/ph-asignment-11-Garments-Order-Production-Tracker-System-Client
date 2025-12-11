@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "details/:id",
-        Component: ProductDetails,
+        element: <PrivateRoute><ProductDetails></ProductDetails></PrivateRoute>,
       },
       {
         path: "blocked",

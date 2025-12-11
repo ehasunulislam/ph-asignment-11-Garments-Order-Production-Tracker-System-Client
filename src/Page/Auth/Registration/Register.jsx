@@ -34,8 +34,7 @@ const Register = () => {
   const redirect = location.state?.from?.pathname || "/"
 
   // Complex Password Regex Definition
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  const passwordRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
   const passwordMessage =
     "Password must be 6+ characters and include 1 uppercase, 1 lowercase, 1 number, and 1 special character (@$!%*?&).";
 
@@ -67,9 +66,8 @@ const Register = () => {
       const result = await createUser(data.email, data.password);
       const user = result.user;
       console.log(user);
-
+     
       // Update Firebase profile
-      // Note: You are passing data.imageData instead of the uploaded image URL (imageData). Corrected below.
       await updateProfileFunction(data.name, imageData);
 
       // Send to backend

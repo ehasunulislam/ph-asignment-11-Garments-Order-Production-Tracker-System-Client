@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { auth } from "../Firebase/firebase.config";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "firebase/auth";
-import useAxios from "../Components/Hooks/useAxios";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+// import useAxios from "../Components/Hooks/useAxios";
+import axios from "axios";
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const axiosInstance = useAxios();
+  // const axiosInstance = useAxios();
 
   /* register functionality start */
   const createUser = (email, password) => {
@@ -57,13 +51,13 @@ const AuthProvider = ({ children }) => {
   };
   /* Sign Out Functionality end */
 
-  /* get Current User functionality start */
-  useEffect(() => {
+  /* Current User functionality start */
+ useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const res = await axiosInstance.get(`/users/${currentUser.email}`);
-          setUser(res.data); // now you get role + status + everything
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${currentUser.email}`);
+          setUser(res.data); 
         } catch (err) {
           console.log(err);
           setUser(null);
@@ -71,14 +65,13 @@ const AuthProvider = ({ children }) => {
       } else {
         setUser(null);
       }
-
       setLoading(false);
     });
 
     return () => unSubscribe();
   }, []);
 
-  /* get Current User functionality end */
+  /* Current User functionality end */
 
   const authInfo = {
     user,

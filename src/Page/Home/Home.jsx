@@ -3,6 +3,7 @@ import Slider from './Slider/Slider'
 import Service from './Services/Service'
 import LatestProduct from './Latest-Product/LatestProduct'
 import NewsLetter from './NewsLetter/NewsLetter'
+import Reviews from './Reviews/Reviews'
 
 const Home = () => {
   return (
@@ -11,8 +12,8 @@ const Home = () => {
             <Slider />
             <Service />
             <LatestProduct />
+            <Reviews/>
         </section>
-
         <NewsLetter />
     </div>
   )

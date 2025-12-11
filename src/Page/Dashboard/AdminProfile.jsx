@@ -9,6 +9,8 @@ const AdminProfile = () => {
   const { user, signOutFunction } = useAuthInfo();
   const axiosInstance = useAxios();
 
+  console.log(user.displayName)
+
   const { data: userData = {}, isLoading, error } = useQuery({
     queryKey: ["userData", user?.email],
     enabled: !!user?.email,
@@ -17,6 +19,7 @@ const AdminProfile = () => {
       return res.data;
     },
   });
+
 
 
   // handle signout functionality 
@@ -38,7 +41,6 @@ const AdminProfile = () => {
         });
       });
   };
-  
 
 
   if(isLoading) {
@@ -60,7 +62,7 @@ const AdminProfile = () => {
           />
         </figure>
         <div className="card-body items-center text-center">
-          <h2 className="card-title">{user.displayName}</h2>
+          <h2 className="card-title">Name: {user.name}</h2>
           <p>Role: {userData?.role || ""}</p>
           <p>Status: {userData?.status || ""}</p>
           <div className="card-actions">
