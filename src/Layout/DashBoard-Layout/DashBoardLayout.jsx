@@ -146,7 +146,7 @@ const DashBoardLayout = () => {
                   <Link
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                     data-tip="user role"
-                    to="/dashboard/user-management"
+                    to="/dashboard/user-role"
                   >
                     <FaUserCog size={25} />
                     <span className="is-drawer-close:hidden">

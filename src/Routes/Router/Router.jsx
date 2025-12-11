@@ -18,6 +18,7 @@ import PaymentSuccess from "../../Page/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../../Page/Dashboard/Payment/PaymentCancelled";
 import SellInfo from "../../Page/Dashboard/Sell-Info/SellInfo";
 import UserManagement from "../../Page/Dashboard/User-Management/UserManagement";
+import UserRole from "../../Page/Dashboard/User-Role/UserRole";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "user-management",
         Component: UserManagement,
+      },
+      {
+        path: "user-role",
+        Component: UserRole,
       },
       {
         path: "sell-product",

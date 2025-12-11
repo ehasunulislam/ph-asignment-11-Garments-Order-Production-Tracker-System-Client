@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import PageLoading from "../../../Components/Loading/PageLoading";
 import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
 import Swal from "sweetalert2";
+import { GiCheckMark } from "react-icons/gi";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const UserManagement = () => {
   const axiosInstance = useAxios();
@@ -75,6 +77,7 @@ const UserManagement = () => {
               <th>Image</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Role</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -83,7 +86,7 @@ const UserManagement = () => {
           <tbody>
             {users.length === 0 ? (
               <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-500">
+                <td colSpan="6" className="text-center py-4">
                   <DataLoading />
                 </td>
               </tr>
@@ -135,6 +138,26 @@ const UserManagement = () => {
                     {user.email}
                   </td>
 
+                  {/* Role */}
+                  <td className="flex justify-between md:table-cell mb-2 md:mb-0">
+                    <span className="font-semibold md:hidden">Role</span>
+
+                    <span
+                      className={`badge ${
+                        user.role === "admin"
+                          ? "badge-success badge badge-soft"
+                          : user.role === "user"
+                          ? "badge-secondary badge badge-soft"
+                          : user.role === "buyer"
+                          ? "badge-info badge badge-soft"
+                          : user.role === "manager"
+                          ? "badge-primary badge badge-soft"
+                          : "badge-neutral"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  </td>
                   {/* Status */}
                   <td
                     className={`flex justify-between md:table-cell mb-2 md:mb-0 ${
@@ -156,14 +179,14 @@ const UserManagement = () => {
                         className="btn btn-sm bg-primary text-white font-normal"
                         onClick={() => handleApproveUser(user._id)}
                       >
-                        Approve
+                        <GiCheckMark />
                       </button>
 
                       <button
                         className="btn btn-sm bg-secondary text-white font-normal"
                         onClick={() => handleDeleteUser(user._id)}
                       >
-                        Delete
+                        <RiDeleteBin5Fill />
                       </button>
                     </div>
                   </td>
