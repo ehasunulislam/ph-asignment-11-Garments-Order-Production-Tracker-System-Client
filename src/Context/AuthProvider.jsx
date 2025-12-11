@@ -9,10 +9,12 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import useAxios from "../Components/Hooks/useAxios";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const axiosInstance = useAxios();
 
   /* register functionality start */
   const createUser = (email, password) => {
@@ -57,15 +59,25 @@ const AuthProvider = ({ children }) => {
 
   /* get Current User functionality start */
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const res = await axiosInstance.get(`/users/${currentUser.email}`);
+          setUser(res.data); // now you get role + status + everything
+        } catch (err) {
+          console.log(err);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+
       setLoading(false);
     });
 
-    return () => {
-      unSubscribe();
-    };
+    return () => unSubscribe();
   }, []);
+
   /* get Current User functionality end */
 
   const authInfo = {
@@ -75,7 +87,7 @@ const AuthProvider = ({ children }) => {
     updateProfileFunction,
     signInWithGoogle,
     loginWithEmailPassword,
-    signOutFunction
+    signOutFunction,
   };
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };

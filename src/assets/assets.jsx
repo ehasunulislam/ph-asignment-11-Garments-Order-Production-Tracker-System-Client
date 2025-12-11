@@ -16,11 +16,12 @@ import pageLoading from './animation/page-loading.json'
 import dataLoading from "./animation/data.json"
 import paymentSuccess from "./animation/payment-success.json"
 import paymentCancel from "./animation/payment-failed.json"
+import block from "./animation/block.json"
 
 export const assets = {
   logo,
   s1, s2, s3, s4,
-  error, pageLoading, dataLoading, paymentSuccess, paymentCancel,
+  error, pageLoading, dataLoading, paymentSuccess, paymentCancel, block,
   factory,
 };
 

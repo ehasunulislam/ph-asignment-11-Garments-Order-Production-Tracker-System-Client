@@ -1,6 +1,6 @@
 import React from "react";
 import { HiArrowRightOnRectangle } from "react-icons/hi2";
-import { Link, Outlet } from "react-router";
+import { Link, Navigate, Outlet } from "react-router";
 import { assets } from "../../assets/assets";
 import { CgProfile } from "react-icons/cg";
 import { FaSellcast, FaUserCog } from "react-icons/fa";
@@ -9,11 +9,11 @@ import { TbHomeFilled } from "react-icons/tb";
 import useRole from "../../Components/Hooks/useRole";
 import { TiInfoLargeOutline } from "react-icons/ti";
 import { FaUsersLine } from "react-icons/fa6";
-// import useAuthInfo from "../../Components/Hooks/useAuthInfo";
+import useAuthInfo from "../../Components/Hooks/useAuthInfo";
 
 const DashBoardLayout = () => {
   const { role } = useRole();
-  // const {user} = useAuthInfo();
+  const { user } = useAuthInfo();
 
   return (
     <div className="drawer lg:drawer-open">
@@ -39,7 +39,14 @@ const DashBoardLayout = () => {
 
         {/* Outlet */}
         <main className="w-11/12 mx-auto py-5">
-          <Outlet></Outlet>
+          {user?.status === "blocked" ? (
+            <div className="text-center mt-10 text-red-500 text-xl font-semibold">
+              {/* Your account is blocked. Please contact admin. */}
+               <Navigate to="/blocked" replace />
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </main>
       </div>
 
@@ -77,7 +84,7 @@ const DashBoardLayout = () => {
             </li>
 
             {/* Sell Your Product - manager */}
-            {role === "manager" && (
+            {role === "manager" && user?.status === "active" && (
               <>
                 {/*  sell a product from */}
                 <li>
@@ -108,7 +115,7 @@ const DashBoardLayout = () => {
             )}
 
             {/* Add-To-Cart Info - buyer */}
-            {role === "buyer" && (
+            {role === "buyer" && user?.status === "active" && (
               <>
                 <li>
                   <Link
@@ -126,7 +133,7 @@ const DashBoardLayout = () => {
             {/* Admin Status URL */}
             {role === "admin" && (
               <>
-              {/* user management */}
+                {/* user management */}
                 <li>
                   <Link
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -140,18 +147,15 @@ const DashBoardLayout = () => {
                   </Link>
                 </li>
 
-
                 {/* user role management */}
-                 <li>
+                <li>
                   <Link
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                     data-tip="user role"
                     to="/dashboard/user-role"
                   >
                     <FaUserCog size={25} />
-                    <span className="is-drawer-close:hidden">
-                      User Role
-                    </span>
+                    <span className="is-drawer-close:hidden">User Role</span>
                   </Link>
                 </li>
               </>

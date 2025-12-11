@@ -19,6 +19,7 @@ import PaymentCancelled from "../../Page/Dashboard/Payment/PaymentCancelled";
 import SellInfo from "../../Page/Dashboard/Sell-Info/SellInfo";
 import UserManagement from "../../Page/Dashboard/User-Management/UserManagement";
 import UserRole from "../../Page/Dashboard/User-Role/UserRole";
+import Block from "../../Page/Block-Page/Block";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
         path: "details/:id",
         Component: ProductDetails,
       },
+      {
+        path: "blocked",
+        Component: Block,
+      }
     ],
   },
   {

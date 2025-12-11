@@ -16,7 +16,7 @@ const UserRole = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedRole, setSelectedRole] = useState("user");
 
-  const { data: users = [], isLoading, refetch } = useQuery({
+  const { data: users = [], isLoading, refetch, } = useQuery({
     queryKey: ["all-users"],
     queryFn: async () => {
       const res = await axiosInstance.get("/all-user");
@@ -34,7 +34,9 @@ const UserRole = () => {
   // handle change role functionality
   const handleChangeRole = async () => {
     try {
-      const res = await axiosInstance.put(`/change-role/${selectedUser._id}`, {role: selectedRole});
+      const res = await axiosInstance.put(`/change-role/${selectedUser._id}`, {
+        role: selectedRole,
+      });
 
       if (res.data.success) {
         Swal.fire({
@@ -49,10 +51,9 @@ const UserRole = () => {
     }
   };
 
-
   // ROLE BADGE CLASS FUNCTION
   const getRoleBadge = (role) => {
-    let color = "badge-secondary"; 
+    let color = "badge-secondary";
 
     if (role === "admin") color = "badge-success";
     if (role === "buyer") color = "badge-primary";
@@ -61,8 +62,54 @@ const UserRole = () => {
     return `badge badge-soft ${color}`;
   };
 
+  // handle block user by admin
+  const handleBlockUser = async (id) => {
+    try {
+      const res = await axiosInstance.put(`/blocked-user/${id}`);
+
+      if (res.data.success) {
+        Swal.fire({
+          title: "User has been blocked.",
+          icon: "success",
+          draggable: true,
+        });
+        
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      });
+    }
+  };
+
+  // handle un-block user by admin
+  const handleUnBlockUser = async (id) => {
+    try {
+      const res = await axiosInstance.put(`/unblocked-user/${id}`);
+
+      if (res.data.success) {
+        Swal.fire({
+          title: "User is active again.",
+          icon: "success",
+          draggable: true,
+        });
+
+        refetch();
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      });
+    }
+  };
+
   if (isLoading) {
-    return <PageLoading />
+    return <PageLoading />;
   }
 
   return (
@@ -101,9 +148,7 @@ const UserRole = () => {
                   <td>{item.name}</td>
 
                   <td>
-                    <span className={getRoleBadge(item.role)}>
-                      {item.role}
-                    </span>
+                    <span className={getRoleBadge(item.role)}>{item.role}</span>
                   </td>
 
                   <td className="flex gap-2">
@@ -114,13 +159,23 @@ const UserRole = () => {
                       <PiUserSwitchBold />
                     </button>
 
-                    <button className="btn btn-sm bg-green-400 text-white">
-                      <TbLockOpen2 />
-                    </button>
-
-                    <button className="btn btn-sm bg-secondary text-white">
-                      <IoLockClosedOutline />
-                    </button>
+                    {/* conditional block/un-block system */}
+                    {item.status === "blocked" ? (
+                      <button
+                        className="btn btn-sm bg-secondary text-white"
+                        onClick={() => handleUnBlockUser(item._id)}
+                      >
+                        <IoLockClosedOutline />{" "}
+                        {/* Blocked → show closed lock */}
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-sm bg-green-400 text-white"
+                        onClick={() => handleBlockUser(item._id)}
+                      >
+                        <TbLockOpen2 /> {/* Active → show open lock */}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))
@@ -145,9 +200,7 @@ const UserRole = () => {
 
               <div>
                 <h3 className="font-bold">{item.name}</h3>
-                <span className={getRoleBadge(item.role)}>
-                  {item.role}
-                </span>
+                <span className={getRoleBadge(item.role)}>{item.role}</span>
               </div>
             </div>
 
@@ -172,7 +225,10 @@ const UserRole = () => {
       </div>
 
       {/* change user role modal */}
-      <dialog ref={changeUserRole} className="modal modal-bottom sm:modal-middle">
+      <dialog
+        ref={changeUserRole}
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-3">
             Change Role for: {selectedUser?.name}
