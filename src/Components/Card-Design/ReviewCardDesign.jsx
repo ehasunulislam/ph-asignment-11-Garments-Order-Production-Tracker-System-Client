@@ -11,7 +11,7 @@ const ReviewCardDesign = ({ name, email, photoURL, rating, comment, date }) => {
           <img
             src={photoURL}
             alt={name}
-            className="w-14 h-14 rounded-full object-cover border"
+            className="w-10 h-10 rounded-full object-cover border border-gray-300"
           />
           <div>
             <h3 className="font-semibold text-lg text-gray-800">{name}</h3>

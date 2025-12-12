@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-
+import {
+  Navigation,
+  Pagination,
+  Autoplay,
+  EffectCoverflow,
+} from "swiper/modules";
 
 // swiper style
 import "swiper/css";
@@ -17,8 +21,7 @@ const ReviewCard = () => {
   const axiosInstance = useAxios();
 
   useEffect(() => {
-    axiosInstance.get("/reviews")
-    .then(res => {
+    axiosInstance.get("/reviews").then((res) => {
       setReviewData(res.data);
       setLoading(false);
     });
@@ -32,31 +35,32 @@ const ReviewCard = () => {
     <div>
       <div className="slider-section mt-10">
         <Swiper
-          className="custom-swiper"
-          modules={[Navigation, Autoplay]}
-          spaceBetween={10}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
           loop={true}
+          slidesPerView={3}
+          coverflowEffect={{
+            rotate: 30,
+            stretch: "50%",
+            depth: 200,
+            modifier: 1,
+            scale: 0.75,
+            slideShadows: false,
+          }}
+          autoplay={{
+            display: 1000,
+            disableOnInteraction: false,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Autoplay]}
+          className="mySwiper"
           breakpoints={{
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 15,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 25,
-            },
-            1280: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
+            0: { slidesPerView: 1 }, 
+            640: { slidesPerView: 1.2 }, 
+            768: { slidesPerView: 2 }, 
+            1024: { slidesPerView: 3 }, 
+            1280: { slidesPerView: 3 }, 
           }}
         >
           {reviewData.map((item) => (
