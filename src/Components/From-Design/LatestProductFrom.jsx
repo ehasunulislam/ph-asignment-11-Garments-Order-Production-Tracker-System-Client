@@ -11,18 +11,14 @@ const LatestProductFrom = () => {
   const axiosInstance = useAxios();
   const [previewImages, setPreviewImages] = useState([]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setPreviewImages(files.map((file) => URL.createObjectURL(file)));
   };
 
+  // handle onSubmit
   const onSubmit = async (data) => {
     const files = data.images;
     if (!files || files.length < 3) {
@@ -100,13 +96,13 @@ const LatestProductFrom = () => {
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
-              className="input input-bordered w-full bg-gray-100 font-medium text-gray-700 read-only:cursor-default"
-              value={user?.displayName}
+              className="input input-bordered w-full bg-gray-100 font-medium text-gray-700 read-only:cursor-default outline-0"
+              value={user.displayName}
               readOnly
             />
             <input
               type="email"
-              className="input input-bordered w-full bg-gray-100 font-medium text-gray-700 read-only:cursor-default"
+              className="input input-bordered w-full bg-gray-100 font-medium text-gray-700 read-only:cursor-default outline-0"
               value={user?.email}
               readOnly
             />

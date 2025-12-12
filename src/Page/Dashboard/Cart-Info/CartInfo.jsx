@@ -47,7 +47,7 @@ const CartInfo = () => {
   }
 
   if (error) {
-    return <p>Error loading cart</p>;
+    return <p>{error.message}</p>;
   }
 
   return (

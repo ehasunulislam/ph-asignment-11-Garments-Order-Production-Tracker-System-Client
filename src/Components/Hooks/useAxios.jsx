@@ -1,25 +1,37 @@
 import axios from "axios";
-import React from "react";
-// import useAuthInfo from "./useAuthInfo";
+import React, { useEffect } from "react";
+// import { AuthContext } from "../provider/AuthContext";
+import useAuthInfo from "./useAuthInfo";
 
-const axiosMethod = axios.create({
+const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 const useAxios = () => {
-  // const { user } = useAuthInfo();
+  const { user, loading } = useAuthInfo();
+  console.log(user);
 
-  // useEffect(() => {
-  //   // intercept request
-  //   const result = axiosMethod.interceptors.request.use((config) => {
-  //     config.headers.Authorization = `Bearer ${user?.accessToken}`;
-  //     return config;
-  //   });
+  useEffect(() => {
+    console.log("ACCESS TOKEN FROM useAxios:", user?.accessToken);
 
-  //   console.log(result);
-  // }, [user]);
+    if (!loading && user?.accessToken) {
+      // Add request interceptor
+      const requestInterceptor = axiosInstance.interceptors.request.use(
+        (config) => {
+          config.headers.Authorization = `Bearer ${user?.accessToken}`;
+          return config;
+        }
+      );
 
-  return axiosMethod;
+      // Cleanup to prevent multiple interceptors on re-renders
+      return () => {
+        axiosInstance.interceptors.request.eject(requestInterceptor);
+        // axiosInstance.interceptors.response.eject(responseInterceptor);
+      };
+    }
+  }, [user, loading]);
+
+  return axiosInstance;
 };
 
 export default useAxios;

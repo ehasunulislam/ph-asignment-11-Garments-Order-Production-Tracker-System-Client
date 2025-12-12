@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { auth } from "../Firebase/firebase.config";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 // import useAxios from "../Components/Hooks/useAxios";
 import axios from "axios";
 
@@ -52,12 +59,20 @@ const AuthProvider = ({ children }) => {
   /* Sign Out Functionality end */
 
   /* Current User functionality start */
- useEffect(() => {
+  useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${currentUser.email}`);
-          setUser(res.data); 
+          const token =await currentUser.getIdToken();
+
+          const res = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/users/${currentUser.email}`
+          );
+
+          setUser({
+            ...res.data,
+            accessToken: token,
+          });
         } catch (err) {
           console.log(err);
           setUser(null);
@@ -70,6 +85,28 @@ const AuthProvider = ({ children }) => {
 
     return () => unSubscribe();
   }, []);
+
+  // useEffect(() => {
+  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     // console.log("in the auth", currentUser),
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //   });
+  //   return () => {
+  //     unSubscribe();
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     // console.log("in the auth", currentUser),
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //   });
+  //   return () => {
+  //     unSubscribe();
+  //   };
+  // }, []);
 
   /* Current User functionality end */
 

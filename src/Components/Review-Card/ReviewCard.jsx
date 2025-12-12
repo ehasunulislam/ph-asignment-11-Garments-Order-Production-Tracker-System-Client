@@ -56,11 +56,11 @@ const ReviewCard = () => {
           modules={[EffectCoverflow, Autoplay]}
           className="mySwiper"
           breakpoints={{
-            0: { slidesPerView: 1 }, 
-            640: { slidesPerView: 1.2 }, 
-            768: { slidesPerView: 2 }, 
-            1024: { slidesPerView: 3 }, 
-            1280: { slidesPerView: 3 }, 
+            0: { slidesPerView: 1 },
+            640: { slidesPerView: 1.2 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 3 },
           }}
         >
           {reviewData.map((item) => (
@@ -78,6 +78,33 @@ const ReviewCard = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+
+      {/* review modal section */}
+      <div className="mt-5">
+        <section className="btn-sec flex justify-center">
+          <button
+            className="btn"
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+          >
+            Give your best review
+          </button>
+        </section>
+
+        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">
+              Press ESC key or click the button below to close
+            </p>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
       </div>
     </div>
   );
