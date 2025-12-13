@@ -8,19 +8,23 @@ import { useQuery } from "@tanstack/react-query";
 import PageLoading from "../../../Components/Loading/PageLoading";
 import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
 import Swal from "sweetalert2";
+import { GoSearch } from "react-icons/go";
 
 const SellInfo = () => {
   const { user } = useAuthInfo();
   const axiosInstance = useAxios();
   const updateFormRef = useRef();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [categorySearch, setCategorySearch] = useState("");
 
   // Tanstack Query
   const { data: products = [], isLoading, refetch } = useQuery({
-    queryKey: ["my-products", user?.email],
+    queryKey: ["my-products", user?.email, categorySearch],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosInstance.get(`/selling-products/${user?.email}`);
+      const res = await axiosInstance.get(
+        `/selling-products/${user?.email}?category=${categorySearch}`
+      );
       return res.data;
     },
   });
@@ -64,8 +68,22 @@ const SellInfo = () => {
     <div>
       <Title text2={"Sell Information"} />
 
+      {/* search box */}
+      <div className="flex justify-end">
+        <label className="input outline-0 w-[180px]">
+          <GoSearch />
+          <input
+            type="search"
+            required
+            placeholder="Search by category"
+            value={categorySearch}
+            onChange={(e) => setCategorySearch(e.target.value)}
+          />
+        </label>
+      </div>
+
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-4">
         <table className="table table-zebra w-full border-collapse md:table-fixed">
           <thead className="hidden md:table-header-group">
             <tr>
@@ -97,7 +115,9 @@ const SellInfo = () => {
                     {index + 1}
                   </td>
                   <td className="flex justify-between md:table-cell mb-2 md:mb-0">
-                    <span className="font-semibold md:hidden">Product Name</span>
+                    <span className="font-semibold md:hidden">
+                      Product Name
+                    </span>
                     {item.productName}
                   </td>
                   <td className="flex justify-between md:table-cell mb-2 md:mb-0">
@@ -105,10 +125,13 @@ const SellInfo = () => {
                     {item.category}
                   </td>
                   <td className="flex justify-between md:table-cell mb-2 md:mb-0">
-                    <span className="font-semibold md:hidden">Price</span>${item.price}
+                    <span className="font-semibold md:hidden">Price</span>$
+                    {item.price}
                   </td>
                   <td className="flex justify-between md:table-cell mb-2 md:mb-0">
-                    <span className="font-semibold md:hidden">Available Qty</span>
+                    <span className="font-semibold md:hidden">
+                      Available Qty
+                    </span>
                     {item.availableQuantity} pcs
                   </td>
                   <td className="flex justify-between md:table-cell mb-2 md:mb-0">
@@ -152,11 +175,16 @@ const SellInfo = () => {
                 productName: formData.get("productName"),
                 description: formData.get("description"),
                 availableQuantity: Number(formData.get("availableQuantity")),
-                minimumOrderQuantity: Number(formData.get("minimumOrderQuantity")),
+                minimumOrderQuantity: Number(
+                  formData.get("minimumOrderQuantity")
+                ),
                 demoVideo: formData.get("demoVideo"),
               };
 
-              const res = await axiosInstance.put(`/update-product/${selectedProduct._id}`, updatedProduct);
+              const res = await axiosInstance.put(
+                `/update-product/${selectedProduct._id}`,
+                updatedProduct
+              );
 
               if (res.data.success) {
                 Swal.fire("Updated!", "Product has been updated.", "success");
@@ -173,7 +201,9 @@ const SellInfo = () => {
           <h3 className="font-bold text-lg">Update Your Product Details</h3>
 
           {/* Product Name */}
-          <label htmlFor="" className="text-[0.9rem] text-primary">Product Name</label>
+          <label htmlFor="" className="text-[0.9rem] text-primary">
+            Product Name
+          </label>
           <input
             type="text"
             name="productName"
@@ -183,7 +213,9 @@ const SellInfo = () => {
             required
           />
 
-          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">Description</label>
+          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">
+            Description
+          </label>
           <textarea
             name="description"
             defaultValue={selectedProduct?.description || ""}
@@ -192,17 +224,21 @@ const SellInfo = () => {
             required
           />
 
-          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">Available Quantity</label>
+          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">
+            Available Quantity
+          </label>
           <input
             type="number"
             name="availableQuantity"
-            defaultValue={selectedProduct?.availableQuantity }
+            defaultValue={selectedProduct?.availableQuantity}
             placeholder="Available Quantity"
             className="input input-bordered w-full outline-0"
             required
           />
-         
-          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">Minimum OrderQuantity</label>
+
+          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">
+            Minimum OrderQuantity
+          </label>
           <input
             type="number"
             name="minimumOrderQuantity"
@@ -211,8 +247,10 @@ const SellInfo = () => {
             className="input input-bordered w-full outline-0"
             required
           />
-          
-          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">DemoVideo Link (optional)</label>
+
+          <label htmlFor="" className="text-[0.9rem] text-primary pt-1">
+            DemoVideo Link (optional)
+          </label>
           <input
             type="text"
             name="demoVideo"
