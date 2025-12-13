@@ -51,31 +51,29 @@ const CartInfo = () => {
   }
 
   return (
-    <div>
-      <section>
-        <Title text2={"Your Cart Info"} />
-      </section>
+     <div className="p-4">
+      <Title text2={"Your Cart Info"} />
+
       {cartItems.length === 0 ? (
-        <div>
-          <DataLoading />
-        </div>
+        <DataLoading />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Product Name</th>
-                <th>Order Quantity</th>
-                <th>Total Price</th>
-                <th>Created At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cartItems.map((item, index) => {
-                return (
+        <>
+          {/* ================= DESKTOP TABLE ================= */}
+          <div className="hidden md:block overflow-x-auto mt-6">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product Name</th>
+                  <th>Order Quantity</th>
+                  <th>Total Price</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {cartItems.map((item, index) => (
                   <tr key={item._id}>
                     <th>{index + 1}</th>
                     <td>{item.productName}</td>
@@ -90,7 +88,7 @@ const CartInfo = () => {
                         minute: "2-digit",
                       })}
                     </td>
-                    <th>
+                    <td>
                       {item.paymentStatus === "paid" ? (
                         <button className="btn btn-sm bg-primary text-white">
                           Paid
@@ -103,13 +101,58 @@ const CartInfo = () => {
                           Pay
                         </button>
                       )}
-                    </th>
+                    </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* ================= MOBILE CARD VIEW ================= */}
+          <div className="md:hidden space-y-4 mt-6">
+            {cartItems.map((item, index) => (
+              <div
+                key={item._id}
+                className="bg-white border rounded-xl shadow-sm p-4 space-y-2"
+              >
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>#{index + 1}</span>
+                  <span>
+                    {new Date(item.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+
+                <h3 className="font-semibold text-lg">
+                  {item.productName}
+                </h3>
+
+                <div className="flex justify-between text-sm">
+                  <p>
+                    <span className="text-gray-500">Qty:</span>{" "}
+                    {item.orderedQty} pcs
+                  </p>
+                  <p>
+                    <span className="text-gray-500">Price:</span>{" "}
+                    ${item.totalPrice}
+                  </p>
+                </div>
+
+                {item.paymentStatus === "paid" ? (
+                  <button className="btn btn-sm w-full bg-primary text-white">
+                    Paid
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-sm w-full bg-secondary text-white"
+                    onClick={() => handlePayment(item)}
+                  >
+                    Pay Now
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

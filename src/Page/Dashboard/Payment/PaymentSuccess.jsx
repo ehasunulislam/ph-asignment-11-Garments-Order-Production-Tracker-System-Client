@@ -10,9 +10,20 @@ const PaymentSuccess = () => {
   const cartId = searchParams.get("cartId");
 
   useEffect(() => {
-    if (cartId) {
-      axiosInstance.patch(`/carts/payment-success/${cartId}`);
-    }
+    const updatePaymentStatus = async () => {
+      try {
+        if (cartId) {
+          const res = await axiosInstance.patch(
+            `/carts/payment-success/${cartId}`
+          );
+          console.log("Payment updated:", res.data);
+        }
+      } catch (err) {
+        console.error("Payment update failed", err);
+      }
+    };
+
+    updatePaymentStatus();
   }, [cartId, axiosInstance]);
 
   return (
