@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Title from "../../../Components/Title/Title";
 import useAxios from "../../../Components/Hooks/useAxios";
 import PageLoading from "../../../Components/Loading/PageLoading";
@@ -8,21 +8,34 @@ import { PiUserSwitchBold } from "react-icons/pi";
 import { TbLockOpen2 } from "react-icons/tb";
 import { IoLockClosedOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
+import { GoSearch } from "react-icons/go";
 
 const UserRole = () => {
   const axiosInstance = useAxios();
   const changeUserRole = useRef();
+   const [search, setSearch] = useState("");
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedRole, setSelectedRole] = useState("user");
 
   const { data: users = [], isLoading, refetch, } = useQuery({
-    queryKey: ["all-users"],
+    queryKey: ["all-users", search],
     queryFn: async () => {
-      const res = await axiosInstance.get("/all-user");
+      const res = await axiosInstance.get(`/all-user?search=${search}`);
       return res.data;
     },
   });
+
+
+  // useEffect for time in search-box
+    useEffect(() => {
+      const delay = setTimeout(() => {
+        refetch();
+      }, 500);
+  
+      return () => clearTimeout(delay);
+    }, [search, refetch]);
+  
 
   // OPEN MODAL FUNCTION
   const openRoleModal = (user) => {
@@ -116,8 +129,22 @@ const UserRole = () => {
     <div>
       <Title text2={"User Role Manage"} />
 
+      {/* search box */}
+      <div className="flex justify-end">
+        <label className="input outline-0 w-[210px]">
+          <GoSearch />
+          <input
+            type="search"
+            required
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+      </div>
+
       {/* Desktop Table */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto mt-4">
         <table className="table">
           <thead>
             <tr>

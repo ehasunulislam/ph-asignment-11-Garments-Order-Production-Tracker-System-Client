@@ -21,13 +21,14 @@ const UserManagement = () => {
     },
   });
 
+  // useEffect for time in search-box
   useEffect(() => {
-  const delay = setTimeout(() => {
-    refetch();
-  }, 500);
+    const delay = setTimeout(() => {
+      refetch();
+    }, 500);
 
-  return () => clearTimeout(delay);
-}, [search, refetch]);
+    return () => clearTimeout(delay);
+  }, [search, refetch]);
 
   // handle Approve user
   const handleApproveUser = async (id) => {
