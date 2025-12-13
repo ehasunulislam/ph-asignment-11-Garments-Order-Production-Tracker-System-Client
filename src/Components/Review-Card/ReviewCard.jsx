@@ -6,14 +6,15 @@ import {
   Autoplay,
   EffectCoverflow,
 } from "swiper/modules";
-
 // swiper style
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 import useAxios from "../Hooks/useAxios";
 import PageLoading from "../Loading/PageLoading";
 import ReviewCardDesign from "../Card-Design/ReviewCardDesign";
+import Swal from "sweetalert2";
 
 const ReviewCard = () => {
   const [reviewData, setReviewData] = useState([]);
@@ -26,6 +27,37 @@ const ReviewCard = () => {
       setLoading(false);
     });
   }, [axiosInstance]);
+
+  // handle review submit 
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const reviewData = {
+      name: form.name.value,
+      email: form.email.value,
+      photoURL: form.photoURL.value,
+      rating: form.rating.value,
+      comment: form.comment.value,
+    };
+
+    try {
+      const res = await axiosInstance.post("/reviews", reviewData);
+
+      if (res.data.success) {
+        Swal.fire("Thank you!", "Your review has been submitted", "success");
+        form.reset();
+        document.getElementById("my_modal_5").close();
+
+        // refresh slider
+        axiosInstance.get("/reviews").then((res) => {
+          setReviewData(res.data);
+        });
+      }
+    } catch (err) {
+      Swal.fire("Error", err.message, "error");
+    }
+  };
 
   if (loading) {
     return <PageLoading />;
@@ -92,18 +124,69 @@ const ReviewCard = () => {
         </section>
 
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">
-              Press ESC key or click the button below to close
-            </p>
+          <form
+            method="dialog"
+            className="modal-box space-y-3"
+            onSubmit={handleSubmitReview}
+          >
+            <h3 className="font-bold text-lg">Give Your Review</h3>
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className="input input-bordered w-full outline-0"
+              required
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className="input input-bordered w-full outline-0"
+              required
+            />
+
+            <input
+              type="text"
+              name="photoURL"
+              placeholder="Photo URL"
+              className="input input-bordered w-full outline-0"
+            />
+
+            <select
+              name="rating"
+              className="select select-bordered w-full outline-0"
+              required
+            >
+              <option value="">Select Rating</option>
+              <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+              <option value="4">⭐⭐⭐⭐ (4)</option>
+              <option value="3">⭐⭐⭐ (3)</option>
+              <option value="2">⭐⭐ (2)</option>
+              <option value="1">⭐ (1)</option>
+            </select>
+
+            <textarea
+              name="comment"
+              className="textarea textarea-bordered w-full outline-0"
+              placeholder="Write your review"
+              required
+            />
+
             <div className="modal-action">
-              <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
-              </form>
+              <button className="btn btn-primary" type="submit">
+                Submit Review
+              </button>
+              <button
+                className="btn"
+                type="button"
+                onClick={() => document.getElementById("my_modal_5").close()}
+              >
+                Cancel
+              </button>
             </div>
-          </div>
+          </form>
         </dialog>
       </div>
     </div>

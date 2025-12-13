@@ -5,7 +5,7 @@ import ReviewCard from "../../../Components/Review-Card/ReviewCard";
 const Reviews = () => {
   return (
     <div>
-      <Title text2={"Our Customer Review"} />
+      <Title text2={"what our client said"} />
 
       <div>
         <ReviewCard />
