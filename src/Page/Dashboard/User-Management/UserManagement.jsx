@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../../Components/Title/Title";
 import useAxios from "../../../Components/Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
@@ -7,21 +7,27 @@ import DataLoading from "../../../Components/Loading/Data-loading/DataLoading";
 import Swal from "sweetalert2";
 import { GiCheckMark } from "react-icons/gi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { GoSearch } from "react-icons/go";
 
 const UserManagement = () => {
   const axiosInstance = useAxios();
+  const [search, setSearch] = useState("");
 
-  const {
-    data: users = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["all-users"],
+  const { data: users = [], isLoading, refetch } = useQuery({
+    queryKey: ["all-users", search],
     queryFn: async () => {
-      const res = await axiosInstance.get("/all-user");
+      const res = await axiosInstance.get(`/all-user?search=${search}`);
       return res.data;
     },
   });
+
+  useEffect(() => {
+  const delay = setTimeout(() => {
+    refetch();
+  }, 500);
+
+  return () => clearTimeout(delay);
+}, [search, refetch]);
 
   // handle Approve user
   const handleApproveUser = async (id) => {
@@ -67,8 +73,22 @@ const UserManagement = () => {
     <div>
       <Title text2={"User Management"} />
 
+      {/* search box */}
+      <div className="flex justify-end">
+        <label className="input outline-0 w-[210px]">
+          <GoSearch />
+          <input
+            type="search"
+            required
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+      </div>
+
       {/* table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mt-4">
         <table className="table w-full">
           {/* Table Head hide on mobile */}
           <thead className="hidden md:table-header-group">
