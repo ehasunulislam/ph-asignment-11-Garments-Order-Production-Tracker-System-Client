@@ -5,9 +5,11 @@ const AllProductsCard = ({ images, productName, description, category, price, cr
       const image0 = Array.isArray(images) ? images[0] : images;
       const image1 = Array.isArray(images) && images[1] ? images[1] : image0;
       const shortDescription = description.split(" ").slice(0, 10).join(" ") + "...";
+
+
   return (
      <section>
-      <div className="card bg-base-100 w-50 md:w-60 lg:w-89 shadow-sm border border-gray-200">
+      <div className="card bg-base-100 w-50 md:w-60 lg:w-70 shadow-sm border border-gray-200">
         <figure
           className="relative h-30 md:h-48 overflow-hidden rounded-t-xl pt-4"
           onMouseEnter={() => setHover(true)}
