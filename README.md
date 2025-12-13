@@ -1,16 +1,76 @@
-# React + Vite
+# 🧵 Garments Order & Production Tracker – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive **frontend application** built with **React** for managing garments orders, production tracking, users, payments, and reviews.  
+This project is part of a **full-stack MERN application** designed for real-world garments business workflow.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Preview
+👉 Frontend Live Site: https://your-live-site-link.com
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- React.js
+- Tailwind CSS
+- DaisyUI
+- React Router
+- TanStack Query (React Query)
+- Axios (Custom Axios Instance)
+- Swiper.js
+- SweetAlert2
+- Firebase Authentication
+- JWT (JSON Web Token)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Key Features
+
+### 🔐 Authentication & Authorization
+- Email & Password Login / Registration
+- Google Authentication (Firebase)
+- JWT-based secure API communication
+- Role-based access control (Admin, Manager, Seller, Buyer)
+
+---
+
+### 📦 Product & Selling Management
+- Add, update & delete products
+- Seller-specific product listing
+- Search products by category
+- Responsive table layout (mobile → card view)
+
+---
+
+### 🧾 Orders & Payments
+- Order placement system
+- Cart functionality
+- Payment status tracking
+- Order history with timestamps
+
+---
+
+### 👥 User Management (Admin Panel)
+- View all registered users
+- Search users by name or email
+- Approve or delete users
+- Role-based status badges
+
+---
+
+### ⭐ Review System
+- Submit product reviews
+- Swiper slider with coverflow effect
+- User rating, comments, and date
+- Dynamic review rendering
+
+---
+
+### 📱 Responsive UI
+- Mobile-first design
+- Dashboard optimized for all devices
+- Clean and professional UI/UX
+
+---
+
