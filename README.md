@@ -6,7 +6,7 @@ This project is part of a **full-stack MERN application** designed for real-worl
 ---
 
 ## 🔗 Live Preview
-👉 Frontend Live Site: https://your-live-site-link.com
+👉 Frontend Live Site: https://cartzilla.ehasun.com/
 
 ---
 
